@@ -1,0 +1,53 @@
+application: camera
+Init: True
+Process: True
+Refresh: True
+screen-size: [320, 240]
+icon-size: [40, 40]
+screen-modes:
+  1:
+    snap: [7.75, 5.75]
+    settings: [7.75, 1.25]
+    flash_on: [1.25, 1.25]
+    go_back: [1.25, 5.75]
+  
+  2:
+    settings: [7.75, 1.25]
+    snap: [7.75, 5.75]
+    flash_off: [1.25, 1.25]
+    go_back: [1.25, 5.75]
+
+  3:
+    left_arrow: [1.25, 1.25]
+    right_arrow: [7.75, 1.25]
+    go_back: [1.25, 5.75]
+    delete: [7.75, 5.75]
+  
+  4:
+    accept: [3, 4.5]
+    decline: [6, 4.5]
+
+  5:
+    brightness: [2.5, 2]
+    saturation: [3.82, 2]
+    contrast: [5.16, 2]
+    sharpness: [6.5, 2]
+
+    image_effect: [2.5, 3.25]
+    exposure_mode: [3.82, 3.25]
+    rotation: [5.16, 3.25]
+    zoom: [6.5, 3.25]
+
+    meter_mode: [2.5, 4.5]
+    awb: [3.82, 4.5]
+    shutter_speed: [5.16, 4.5]
+    iso: [6.5, 4.5]
+
+    go_back: [1.25, 5.75]
+
+  6:
+    left_arrow: [1.25, 3.5]
+    right_arrow: [7.75, 3.5]
+
+    go_back: [1.25, 5.75]
+ 
