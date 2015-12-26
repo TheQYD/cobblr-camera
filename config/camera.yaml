@@ -8,6 +8,7 @@ screen-modes:
   1:
     snap: [7.75, 5.75]
     settings: [7.75, 1.25]
+    capture: [4.5, 3.5]
     flash_on: [1.25, 1.25]
     go_back: [1.25, 5.75]
   

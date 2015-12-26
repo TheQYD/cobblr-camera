@@ -6,6 +6,7 @@ __version__ = "1.0.1"
 __email__ = "emailqasim@gmail.com"
 
 from engine import Screen
+from engine import Utilities
 from engine import TextWriter
 from engine import SystemState
 from engine import Menu
@@ -14,10 +15,13 @@ import RPi.GPIO
 import io
 import os
 import serial
+import signal
 import picamera
 import time
 import sys
 import threading
+
+signal.signal(signal.SIGINT, Utilities.GracefulExit)
 
 class CameraState(object):
   pass
@@ -128,6 +132,8 @@ def Process():
     __ProcessRightArrow()
   elif button == 'left_arrow':
     __ProcessLeftArrow()
+  elif button == 'capture':
+    CallTakePhoto()
   elif button == 'delete' and SystemState.CameraState.photo_count > 0:
     Menu.JumpTo(screen_mode=4)
     BlitImage(SystemState.CameraState.current_photo, SystemState.pygame, SystemState.screen)
@@ -319,27 +325,25 @@ def __ProcessRightArrow():
     if SystemState.CameraState.video_count > 0:
       NextPhoto()
 
-def TakePhoto():
+def CallTakePhoto():
   """Takes a preview photo with the camera. """
 
   # Only if the flash is enabled will the flash turn on.
   if SystemState.CameraState.flash_enabled == True:
     CallFlash() 
   # Grabs the timestamp of when the photo was taken.  
-  SystemState.camera.capture(file_name, use_video_port=True, splitter_port=1,  format='jpeg')
   SystemState.CameraState.photo_time = str(int(time.time()))
   file_name = SystemState.CameraState.preview_path + 'PREVIEW-' + SystemState.CameraState.photo_time + '.jpeg'
-  thread = threading.Thread(target=_TakePhoto)
+  SystemState.camera.capture(file_name, use_video_port=True, splitter_port=1,  format='jpeg')
+  thread = threading.Thread(target=TakePhoto)
   thread.start()
   ShowPhoto(file_name)
   thread.join()
 
-def _TakePhoto():
+def TakePhoto():
   """Takes a high res photo with the camera."""
   file_name = SystemState.CameraState.photo_path + SystemState.CameraState.photo_time + '.jpeg'
-  resolution = SystemState.CameraState.camera_resolutions['large']
-  SystemState.camera.resolution = resolution['image']
-  SystemState.camera.crop = resolution['crop']
+  SystemState.camera.resolution = (2592, 1944)
   SystemState.camera.capture(file_name, use_video_port=False, format='jpeg')
   SystemState.camera.resolution = (320, 240)
 
@@ -355,14 +359,6 @@ def CallFlash():
   thread = threading.Thread(target=Flash)
   thread.setDaemon(True)
   thread.start()
-
-def CallTakePhoto():
-  """Calls the highres take photo function in a thread."""
-  args = ()
-  thread = threading.Thread(target=__TakePhoto)
-  thread.setDaemon(True)
-  thread.start()
-  thread.join()
 
 def OpenAlbum():
   """Opens the photos folder."""
