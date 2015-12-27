@@ -1,5 +1,4 @@
- **Description**
-  This is the camera application written for the Raspberry Pi's camera.
+ **Description:** This is the camera application written for the Raspberry Pi's camera.
 
  **Requirements**
   1. Raspberry Pi (https://www.adafruit.com/products/2358)
