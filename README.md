@@ -1,13 +1,13 @@
 1. **Description**
-This is the camera application written for the Raspberry Pi's camera.
+  - This is the camera application written for the Raspberry Pi's camera.
 
 2. **Requirements**
- - Raspberry Pi Model B+ or more (https://www.adafruit.com/products/2358)
- - Adafruit 2.8in PiTFT (https://www.adafruit.com/products/1601)
- - Raspberry Pi Camera (https://www.adafruit.com/products/1367)
- - Adafruit Powerboost 1000C (Optional) (https://www.adafruit.com/products/2465)
- - Adafruit Lipo Battery 500mAh (Optional) (https://www.adafruit.com/products/1578)
- - The cobblr software (https://github.com/RoboQYD/cobblr)
+  - Raspberry Pi Model B+ or more (https://www.adafruit.com/products/2358)
+  - Adafruit 2.8in PiTFT (https://www.adafruit.com/products/1601)
+  - Raspberry Pi Camera (https://www.adafruit.com/products/1367)
+  - Adafruit Powerboost 1000C (Optional) (https://www.adafruit.com/products/2465)
+  - Adafruit Lipo Battery 500mAh (Optional) (https://www.adafruit.com/products/1578)
+  - The cobblr software (https://github.com/RoboQYD/cobblr)
 
 3. **Installation**
   1. Clone the repository.
@@ -20,4 +20,4 @@ This is the camera application written for the Raspberry Pi's camera.
 4. **Notes**
 
   - If you want to automatically enter the camera application, change the cobblr.yaml
-    startup application to "camera"
+    startup application to "camera".
