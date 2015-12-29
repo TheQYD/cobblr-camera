@@ -33,17 +33,23 @@ def Init():
   SystemState.CameraState = CameraState
   
   RPi.GPIO.output(7, False)
-  SystemState.CameraState.current_photo = None
+  SystemState.CameraState.current_photo = ""
   SystemState.CameraState.photo_file_name = None
-  SystemState.CameraState.photo_archive = None
   SystemState.CameraState.photo_path = 'media/photos/'
   SystemState.CameraState.preview_path = SystemState.CameraState.photo_path + '.preview/'
+  preview_path = SystemState.CameraState.preview_path
   SystemState.CameraState.image_effect = 0
   SystemState.CameraState.photo_tally = None
   SystemState.CameraState.flash_enabled = True
   SystemState.CameraState.exit_camera = False
   SystemState.CameraState.camera_stream = False
+  SystemState.CameraState.album = False
   SystemState.CameraState.setting = 'none'
+  SystemState.CameraState.photo_archive = os.listdir(preview_path)
+  SystemState.CameraState.photo_archive = [os.path.join(preview_path, pic) for pic in SystemState.CameraState.photo_archive]
+  SystemState.CameraState.photo_archive = sorted(SystemState.CameraState.photo_archive)
+  SystemState.CameraState.photo_count = len(SystemState.CameraState.photo_archive)
+
 
   SystemState.CameraState.image_effect = 0
   SystemState.CameraState.iso = 0
@@ -114,18 +120,16 @@ def Process():
   screen_mode = SystemState.screen_mode
 
   if button == 'flash_on':
-    SystemState.state_history_direction = 0
-    Menu.JumpTo(screen_mode=2)
+    Menu.JumpTo(screen_mode=2, toggle=True)
     SystemState.CameraState.flash_enabled = False
   elif button == 'flash_off':
-    SystemState.state_history_direction = 0
-    Menu.JumpTo(screen_mode=1)
+    Menu.JumpTo(screen_mode=1, toggle=True)
     SystemState.CameraState.flash_enabled = True
   elif button == 'go_back':
     Menu.Back()
     SystemState.VideoState.setting = 'none'
-  elif button == 'snap':
-    SystemState.CameraState.photo_archive = None
+    SystemState.CameraState.album = False
+  elif button == 'gallery':
     Menu.JumpTo(screen_mode=3)
     OpenAlbum()
   elif button == 'right_arrow':
@@ -177,14 +181,11 @@ def Process():
   elif button == 'settings':
     Menu.JumpTo(screen_mode=5)
   elif button == 'accept':
-    SystemState.CameraState.photo_archive = None
-    Menu.Back()
     DeletePhoto()
+    Menu.Back()
     OpenAlbum()
   elif button == 'decline':
-    SystemState.CameraState.photo_archive = None
     Menu.Back()
-    DeletePhoto()
     OpenAlbum()
 
   if SystemState.screen_mode == 5 and SystemState.next_screen_mode == 6:
@@ -292,7 +293,7 @@ def __ProcessLeftArrow():
   elif SystemState.CameraState.setting == 'exposure_mode':
     __PreviousSetting('exposure_mode_values', 'exposure_mode')
   elif SystemState.screen_mode == 3:
-    if SystemState.CameraState.video_count > 0:
+    if SystemState.CameraState.photo_count > 0:
       PreviousPhoto()
 
 def __ProcessRightArrow():
@@ -322,7 +323,7 @@ def __ProcessRightArrow():
   elif SystemState.CameraState.setting == 'exposure_mode':
     __NextSetting('exposure_mode_values', 'exposure_mode')
   elif SystemState.screen_mode == 3:
-    if SystemState.CameraState.video_count > 0:
+    if SystemState.CameraState.photo_count > 0:
       NextPhoto()
 
 def CallTakePhoto():
@@ -362,15 +363,16 @@ def CallFlash():
 
 def OpenAlbum():
   """Opens the photos folder."""
+ 
   path = SystemState.CameraState.preview_path
   SystemState.CameraState.photo_archive = os.listdir(path)
   SystemState.CameraState.photo_archive = [os.path.join(path, pic) for pic in SystemState.CameraState.photo_archive]
   SystemState.CameraState.photo_archive = sorted(SystemState.CameraState.photo_archive)
   SystemState.CameraState.photo_count = len(SystemState.CameraState.photo_archive)
+  SystemState.CameraState.album = True
 
   #If there is a picture in there.
   if SystemState.CameraState.photo_count > 0:
-
     #If that photo is in the list, go to that photo. If not, go to the last photo.
     if SystemState.CameraState.current_photo in SystemState.CameraState.photo_archive:
       SystemState.CameraState.photo_index = SystemState.CameraState.photo_archive.index(SystemState.CameraState.current_photo)
@@ -382,7 +384,8 @@ def OpenAlbum():
     TextWriter.Write(
         state=SystemState, 
         text='No Pictures', 
-        position=(95, 100), 
+        position=(95, 100),
+        permatext=True,
         size=20
     )
 
@@ -449,6 +452,7 @@ def DeletePhoto():
 
 def ShowPhoto(file_name=None, file_index=None):
   """Displays a photo onscreen."""
+
   if file_name == None:
     SystemState.CameraState.current_photo = SystemState.CameraState.photo_archive[file_index]
     file_name = SystemState.CameraState.current_photo
@@ -459,28 +463,28 @@ def ShowPhoto(file_name=None, file_index=None):
   screen = SystemState.screen
   BlitImage(file_name, pygame, screen)
 
-  if SystemState.CameraState.photo_archive != None and SystemState.screen_mode == 3:
-    # Remove 'PREVIEW-' and path leaving just unix time.
-    utime_string = os.path.basename(file_name).split('-')[-1].split('.')[0]
-    timestamp = time.ctime(int(utime_string))
+  if SystemState.CameraState.photo_archive != None: 
+    if SystemState.screen_mode == 3:
+      # Remove 'PREVIEW-' and path leaving just unix time.
+      utime_string = os.path.basename(file_name).split('-')[-1].split('.')[0]
+      timestamp = time.ctime(int(utime_string))
 
-    # Writing the time and position of the photo on the screen.
-    TextWriter.Write(
-        state=SystemState, 
-        text=timestamp, 
-        position=(90, 225), 
-        size=12
-    )
-    TextWriter.Write(
+      # Writing the time and position of the photo on the screen.
+      TextWriter.Write(
+         state=SystemState, 
+         text=timestamp, 
+         position=(90, 225), 
+          size=12
+      )
+      TextWriter.Write(
         state=SystemState, 
         text=SystemState.CameraState.photo_tally, 
         position=(135, 18), 
         size=20
-    )
-
-  if SystemState.CameraState.photo_archive == None:
-    pygame.display.update()
-    time.sleep(2)
+      )
+    elif SystemState.screen_mode != 3 and SystemState.CameraState.album == False:
+      pygame.display.update()
+      time.sleep(2)
 
 def Main():
   """Runs once the user has entered the application."""
