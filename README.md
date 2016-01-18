@@ -13,7 +13,7 @@
 
 **Installation**
  1. Clone the repository.
- 2. Enter the cobblr-audio-recorder directory.
+ 2. Enter the cobblr-camera directory.
  3. Run "setup.py install (path)" where (path) is the location of the cobblr folder.
  4. Enter the cobblr/config directory.
  5. Open "cobblr.yaml" and add "-camera" to the list of applications.
