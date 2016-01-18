@@ -14,11 +14,9 @@ from engine import Events
 import RPi.GPIO
 import io
 import os
-import serial
 import signal
 import picamera
 import time
-import sys
 import threading
 
 signal.signal(signal.SIGINT, Utilities.GracefulExit)

@@ -1,3 +1,5 @@
+![alt tag](https://raw.githubusercontent.com/RoboQYD/cobblr-camera/master/camera.png)
+
 **Description:** This is the camera application written for the Raspberry Pi's camera.
 
 **Requirements**
@@ -14,7 +16,4 @@
  3. Run "setup.py install <path>" where <path> is the location of the cobblr folder.
  4. Enter the cobblr/config directory.
  5. Open "cobblr.yaml" and add "-camera" to the list of applications.
- 6.  Run cobblr.
-
-![alt tag](https://raw.githubusercontent.com/RoboQYD/cobblr-camera/master/camera.png)
-
+ 6. Run cobblr.
