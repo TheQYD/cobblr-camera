@@ -5,20 +5,20 @@ import os
 
 def __InstallDesktopIcon(cobblr_path, icon_name):
   icon_path = os.path.join(cobblr_path, 'applications/desktop/icons')
-  
+
   if os.path.exists(icon_path) is False:
     os.makedirs(icon_path)
-  
+
   icon_dest = os.path.join(icon_path, icon_name)
   cp_command = "cp -r " + icon_name + " " + icon_dest
   os.system(cp_command)
-  
+
   print "Icon installed on Desktop"
 
 def __InstallModule(cobblr_path, module_name, module_files):
   install_path = os.path.join(cobblr_path, 'applications')
   module_path = os.path.join(install_path, module_name)
-  
+
   if os.path.exists(module_path) is False:
     os.makedirs(module_path)
 
@@ -26,11 +26,11 @@ def __InstallModule(cobblr_path, module_name, module_files):
     module_dest = os.path.join(module_path, module_file)
     cp_command = "cp -r " + module_file + " " + module_dest
     os.system(cp_command)
-  
+
   init_file = os.path.join(module_path, '__init__.py')
   open(init_file, 'w').close()
 
-  print "Application installed" 
+  print "Application installed"
 
 
 def Install(cobblr_path):
@@ -39,11 +39,17 @@ def Install(cobblr_path):
     if 'module' in file_name:
       module_name = file_name.split('_')[0]
       icon_name = module_name + ".png"
-  
+
   module_files = [i for i in all_files if '.png' not in i]
-  
+
   try:
-   module_files.remove('setup.py')
+    os.system('./dependencies.sh')
+    module_files.remove('dependencies.sh')
+  except:
+    pass
+
+  try:
+    module_files.remove('setup.py')
   except:
     pass
 
