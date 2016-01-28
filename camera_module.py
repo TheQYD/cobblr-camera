@@ -43,6 +43,7 @@ def Init():
   SystemState.CameraState.camera_stream = False
   SystemState.CameraState.album = False
   SystemState.CameraState.setting = 'none'
+  MakePhotoPath()
   SystemState.CameraState.photo_archive = os.listdir(preview_path)
   SystemState.CameraState.photo_archive = [os.path.join(preview_path, pic) for pic in SystemState.CameraState.photo_archive]
   SystemState.CameraState.photo_archive = sorted(SystemState.CameraState.photo_archive)
@@ -102,7 +103,6 @@ def Init():
   ]
   SystemState.CameraState.shutter_speed_values = [1000000, 100000, 10000, 1000, 100]
 
-  MakePhotoPath()
 
 def MakePhotoPath():
   """Creates the folder that stores the highres and preview photo."""
