@@ -125,7 +125,7 @@ def Process():
     SystemState.CameraState.flash_enabled = True
   elif button == 'go_back':
     Menu.Back()
-    SystemState.VideoState.setting = 'none'
+    SystemState.CameraState.setting = 'none'
     SystemState.CameraState.album = False
   elif button == 'gallery':
     Menu.JumpTo(screen_mode=3)

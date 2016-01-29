@@ -15,6 +15,7 @@ screen-modes:
   2:
     settings: [7.75, 1.25]
     gallery: [7.75, 5.75]
+    capture: [4.5, 3.5]
     flash_off: [1.25, 1.25]
     go_back: [1.25, 5.75]
 
