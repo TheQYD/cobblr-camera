@@ -1,7 +1,7 @@
 application: camera
 Init: True
 Process: True
-Refresh: True
+Main: True
 screen-size: [320, 240]
 icon-size: [40, 40]
 screen-modes:
