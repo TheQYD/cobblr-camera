@@ -1,22 +1,30 @@
-![alt tag](https://raw.githubusercontent.com/RoboQYD/cobblr-camera/master/camera.png)
+A Camera application for written for the [Cobblr framework](http://github.com/TheQYD/cobblr).
 
-**Description:** This is the camera application written for the Raspberry Pi's camera.
+![Cobblr Video](https://raw.githubusercontent.com/TheQYD/cobblr/master/photos/cobblr_camera.jpg)
 
-**Requirements**
- 1. Raspberry Pi (https://www.adafruit.com/products/2358)
- 2. Adafruit 2.8in PiTFT (https://www.adafruit.com/products/1601)
- 3. Raspberry Pi Camera (https://www.adafruit.com/products/1367)
- 4. USB Microphone Dongle (http://www.amazon.com/Super-Microphone-Adapter-Driver-Notebook/dp/B00M3UJ42A)
- 5. The cobblr software (https://github.com/RoboQYD/cobblr)
- 6. (Optional) Adafruit Powerboost 1000C (https://www.adafruit.com/products/2465)
- 7. (Optional) Adafruit Lipo Battery 500mAh (https://www.adafruit.com/products/1578)
+# Hardware
+Here's a list of hardware necessary to make cobblr-camera work:
 
-**Installation**
- 1. Clone the repository.
- 2. Enter the cobblr-camera directory.
- 3. Run "setup.py install (path)" where (path) is the location of the cobblr folder.
- 4. Enter the cobblr/config directory.
- 5. Open "cobblr.yaml" and add "-camera" to the list of applications.
- 6. Run cobblr.
+ - 1 [Raspberry Pi](https://www.adafruit.com/products/2358)
+ - 1 [Raspberry Pi Camera](https://www.adafruit.com/products/3099)
+ - 1 [Adafruit 2.8in PiTFT](https://www.adafruit.com/products/1601)
+ - 1 [(Optional) Adafruit Powerboost 1000C](https://www.adafruit.com/products/2465)
+ - 1 [(Optional) Adafruit LiPo Battery 500mAh](https://www.adafruit.com/products/1578)
 
+# How to Install
 
+Follow the directions to install the [Cobblr framework](http://github.com/TheQYD/cobblr). The PiTFT should be configured in landscape mode (90 degree rotation). Once that's finished, and the framework is installed, execute this command:
+
+```
+sudo cobblr install cobblr-camera
+```
+
+# More
+
+Though not required, I've made a delrin body for it. The CADs are avaliable [here](https://github.com/TheQYD/CAD/tree/master/cobblr-camera). Other applications were made to work with the cobblr-camera:
+
+- [cobblr-calculator](http://gihub.com/TheQYD/cobblr-video)
+- [cobblr-music](http://gihub.com/TheQYD/cobblr-audio)
+
+# License
+Cobblr Camera is available under the MIT license. See the LICENSE file for more info. Make it better!
